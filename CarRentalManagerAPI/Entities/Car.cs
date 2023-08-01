@@ -14,6 +14,7 @@ namespace CarRentalManagerAPI.Entities
         public int PricePerDay { get; set; }
         public string RegistrationNumber { get; set; }
         public string VIN { get; set; }
-        public RentalStatusEnum Status { get; set; }
+        public CarStatusEnum Status { get; set; }
+        public string Comments { get; set; }
     }
 }
