@@ -10,6 +10,8 @@ namespace CarRentalManagerAPI.Entities
         public virtual Car Car { get; set; }
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime ExpectedDateOfReturn { get; set; }
         public RentalStatusEnum Status { get; set; }
