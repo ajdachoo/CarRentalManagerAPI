@@ -69,7 +69,7 @@ namespace CarRentalManagerAPI.Entities
                 .Property(c => c.Comments)
                 .HasMaxLength(50);
             modelBuilder.Entity<Client>()
-                .Property(c => c.DrivingLicenseCategory)
+                .Property(c => c.drivingLicenseCategories)
                 .IsRequired();
             modelBuilder.Entity<Client>()
                 .Property(c => c.Email)
