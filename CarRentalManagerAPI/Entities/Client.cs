@@ -1,4 +1,5 @@
 ﻿using CarRentalManagerAPI.Enums;
+using System.Collections.Generic;
 
 namespace CarRentalManagerAPI.Entities
 {
@@ -12,8 +13,9 @@ namespace CarRentalManagerAPI.Entities
         public string Email { get; set; }
         public DrivingLicenseCategoryEnum DrivingLicenseCategory { get; set; }
         public bool IsBlocked { get; set; }
-        #nullable enable
+#nullable enable
         public string? Comments { get; set; }
+        public virtual List<Rental>?  Rentals { get; set; }
 
     }
 }

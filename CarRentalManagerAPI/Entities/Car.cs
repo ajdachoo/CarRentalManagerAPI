@@ -1,4 +1,5 @@
 ﻿using CarRentalManagerAPI.Enums;
+using System.Collections.Generic;
 
 namespace CarRentalManagerAPI.Entities
 {
@@ -15,6 +16,8 @@ namespace CarRentalManagerAPI.Entities
         public string RegistrationNumber { get; set; }
         public string VIN { get; set; }
         public CarStatusEnum Status { get; set; }
-        public string Comments { get; set; }
+#nullable enable
+        public string? Comments { get; set; }
+        public virtual List<Rental>? Rentals { get; set; }
     }
 }
