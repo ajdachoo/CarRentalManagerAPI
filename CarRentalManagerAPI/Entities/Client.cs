@@ -11,7 +11,7 @@ namespace CarRentalManagerAPI.Entities
         public string PESELOrPassportNumber { get; set; }
         public int PhoneNumber { get; set; }
         public string Email { get; set; }
-        public DrivingLicenseCategoryEnum DrivingLicenseCategory { get; set; }
+        public string DrivingLicenseCategory { get; set; }
         public bool IsBlocked { get; set; }
 #nullable enable
         public string? Comments { get; set; }

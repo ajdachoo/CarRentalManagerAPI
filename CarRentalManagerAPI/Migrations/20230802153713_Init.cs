@@ -41,7 +41,7 @@ namespace CarRentalManagerAPI.Migrations
                     PESELOrPassportNumber = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     PhoneNumber = table.Column<int>(type: "int", maxLength: 9, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    DrivingLicenseCategory = table.Column<int>(type: "int", nullable: false),
+                    DrivingLicenseCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },

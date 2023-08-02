@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalManagerAPI.Migrations
 {
     [DbContext(typeof(CarRentalManagerDbContext))]
-    [Migration("20230802113609_Init")]
+    [Migration("20230802153713_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,8 +89,9 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("DrivingLicenseCategory")
-                        .HasColumnType("int");
+                    b.Property<string>("DrivingLicenseCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
