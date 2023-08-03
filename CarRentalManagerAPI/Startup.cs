@@ -1,4 +1,5 @@
 using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace CarRentalManagerAPI
             services.AddDbContext<CarRentalManagerDbContext>();
             services.AddScoped<RentalSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
+            services.AddScoped<ICarService, CarService>();
             services.AddSwaggerGen();
         }
 

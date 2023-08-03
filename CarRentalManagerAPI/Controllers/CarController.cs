@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarRentalManagerAPI.Entities;
 using CarRentalManagerAPI.Models.Car;
+using CarRentalManagerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,49 +11,53 @@ namespace CarRentalManagerAPI.Controllers
     [Route("api/cars")]
     public class CarController : ControllerBase
     {
-        private readonly CarRentalManagerDbContext _dbContext;
-        private readonly IMapper _mapper;
+        private readonly ICarService _carService;
 
-        public CarController(CarRentalManagerDbContext dbContext, IMapper mapper)
+        public CarController(ICarService carService)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            _carService = carService;
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCar([FromRoute] int id)
+        {
+            var isDeleted = _carService.Delete(id);
+
+            if(isDeleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
 
         [HttpPost]
         public ActionResult CreateCar([FromBody] CreateCarDto createCarDto)
         {
-            var car = _mapper.Map<Car>(createCarDto);
+            var carId = _carService.Create(createCarDto);
 
-            _dbContext.Cars.Add(car);
-            _dbContext.SaveChanges();
-
-            return Created($"api/cars/{car.Id}", null);
+            return Created($"api/cars/{carId}", null);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<CarDto>> GetAll()
         {
-            var cars = _dbContext.Cars.ToList();
+            var cars = _carService.GetAll();
 
-            var carsDtos = _mapper.Map<List<CarDto>>(cars);
-
-            return Ok(carsDtos);
+            return Ok(cars);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Car> Get([FromRoute] int id)
         {
-            var car = _dbContext.Cars.FirstOrDefault(c => c.Id == id);
+            var car = _carService.GetById(id);
 
             if(car is null)
             {
                 return NotFound();
             }
 
-            var carDto = _mapper.Map<CarDto>(car);
-
-            return Ok(carDto);
+            return Ok(car);
         }
     }
 }
