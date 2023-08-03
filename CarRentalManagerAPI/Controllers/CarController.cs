@@ -1,4 +1,6 @@
-﻿using CarRentalManagerAPI.Entities;
+﻿using AutoMapper;
+using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Models.Car;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +11,33 @@ namespace CarRentalManagerAPI.Controllers
     public class CarController : ControllerBase
     {
         private readonly CarRentalManagerDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public CarController(CarRentalManagerDbContext dbContext)
+        public CarController(CarRentalManagerDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        [HttpPost]
+        public ActionResult CreateCar([FromBody] CreateCarDto createCarDto)
+        {
+            var car = _mapper.Map<Car>(createCarDto);
+
+            _dbContext.Cars.Add(car);
+            _dbContext.SaveChanges();
+
+            return Created($"api/cars/{car.Id}", null);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Car>> GetAll()
+        public ActionResult<IEnumerable<CarDto>> GetAll()
         {
             var cars = _dbContext.Cars.ToList();
-            return Ok(cars);
+
+            var carsDtos = _mapper.Map<List<CarDto>>(cars);
+
+            return Ok(carsDtos);
         }
 
         [HttpGet("{id}")]
@@ -32,7 +50,9 @@ namespace CarRentalManagerAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(car);
+            var carDto = _mapper.Map<CarDto>(car);
+
+            return Ok(carDto);
         }
     }
 }
