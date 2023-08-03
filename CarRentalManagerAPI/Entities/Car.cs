@@ -16,8 +16,8 @@ namespace CarRentalManagerAPI.Entities
         public string RegistrationNumber { get; set; }
         public string VIN { get; set; }
         public CarStatusEnum Status { get; set; }
+        public virtual List<Rental> Rentals { get; set; } = new List<Rental>();
 #nullable enable
         public string? Comments { get; set; }
-        public virtual List<Rental>? Rentals { get; set; }
     }
 }

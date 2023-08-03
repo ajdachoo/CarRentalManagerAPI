@@ -29,9 +29,8 @@ namespace CarRentalManagerAPI.Entities
             }
         }
         public string drivingLicenseCategories { get; set; }
+        public virtual List<Rental> Rentals { get; set; } = new List<Rental>();
 #nullable enable
         public string? Comments { get; set; }
-        public virtual List<Rental>?  Rentals { get; set; }
-
     }
 }

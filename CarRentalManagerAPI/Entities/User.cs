@@ -8,7 +8,6 @@ namespace CarRentalManagerAPI.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
-#nullable enable
-        public virtual List<Rental>? Rentals { get; set; }
+        public virtual List<Rental> Rentals { get; set; } = new List<Rental>();
     }
 }
