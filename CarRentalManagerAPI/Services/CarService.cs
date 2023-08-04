@@ -12,6 +12,7 @@ namespace CarRentalManagerAPI.Services
         IEnumerable<CarDto> GetAll();
         int Create(CreateCarDto createCarDto);
         bool Delete(int id);
+        bool Update(int id, UpdateCarDto updateCarDto);
     }
     public class CarService : ICarService
     {
@@ -22,6 +23,31 @@ namespace CarRentalManagerAPI.Services
         {
             _dbContext = dbContext;
             _mapper = mapper;
+        }
+
+        public bool Update(int id, UpdateCarDto updateCarDto)
+        {
+            var car = _dbContext.Cars.FirstOrDefault(c => c.Id == id);
+
+            if(car is null) return false;
+
+            var updateCar = _mapper.Map<Car>(updateCarDto); 
+
+            car.PricePerDay = updateCar.PricePerDay;
+            car.DrivingLicenseCategory = updateCar.DrivingLicenseCategory;
+            car.EnginePower = updateCar.EnginePower;
+            car.Transmission = updateCar.Transmission;
+            car.Status = updateCar.Status;
+            car.Mark = updateCar.Mark;
+            car.VIN = updateCar.VIN;
+            car.RegistrationNumber = updateCar.RegistrationNumber;
+            car.Comments = updateCar.Comments;
+            car.Model = updateCar.Model;
+            car.NumberOfSeats = updateCar.NumberOfSeats;
+
+            _dbContext.SaveChanges();
+
+            return true;
         }
 
         public bool Delete(int id)
