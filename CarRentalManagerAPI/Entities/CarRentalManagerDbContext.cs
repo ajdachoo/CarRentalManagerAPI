@@ -22,10 +22,10 @@ namespace CarRentalManagerAPI.Entities
                 eb.Property(c => c.DrivingLicenseCategory).IsRequired();
                 eb.Property(c => c.Comments).HasMaxLength(50);
                 eb.Property(c => c.Mark).HasMaxLength(25).IsRequired();
-                eb.Property(c => c.EnginePower).HasMaxLength(4).IsRequired();
+                eb.Property(c => c.EnginePower).IsRequired();
                 eb.Property(c => c.Model).HasMaxLength(25).IsRequired();
-                eb.Property(c => c.NumberOfSeats).HasMaxLength(2).IsRequired();
-                eb.Property(c => c.PricePerDay).HasMaxLength(6).IsRequired();
+                eb.Property(c => c.NumberOfSeats).IsRequired();
+                eb.Property(c => c.PricePerDay).IsRequired();
                 eb.Property(c => c.RegistrationNumber).HasMaxLength(10).IsRequired();
                 eb.Property(c => c.VIN).HasMaxLength(25).IsRequired();
             });
@@ -48,7 +48,7 @@ namespace CarRentalManagerAPI.Entities
                 eb.Property(r => r.ExpectedDateOfReturn).IsRequired();
                 eb.Property(r => r.RentalDate).IsRequired();
                 eb.Property(r => r.Comments).HasMaxLength(50);
-                eb.Property(r => r.Amount).HasMaxLength(25).IsRequired();
+                eb.Property(r => r.Amount).IsRequired();
             });
 
             modelBuilder.Entity<User>(eb =>

@@ -9,6 +9,7 @@ using System.Linq;
 namespace CarRentalManagerAPI.Controllers
 {
     [Route("api/cars")]
+    [ApiController]
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;
