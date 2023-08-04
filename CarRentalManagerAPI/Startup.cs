@@ -1,4 +1,5 @@
 using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Middleware;
 using CarRentalManagerAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace CarRentalManagerAPI
             services.AddScoped<RentalSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddSwaggerGen();
         }
 
@@ -44,6 +46,8 @@ namespace CarRentalManagerAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 

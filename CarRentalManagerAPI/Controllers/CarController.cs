@@ -21,27 +21,17 @@ namespace CarRentalManagerAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] int id, [FromBody] UpdateCarDto updateCarDto)
         {
-            var isUpdated = _carService.Update(id, updateCarDto);
+            _carService.Update(id, updateCarDto);
 
-            if(isUpdated)
-            {
-                return Ok();
-            }
-
-            return NotFound();
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _carService.Delete(id);
+            _carService.Delete(id);
 
-            if(isDeleted)
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            return NoContent();
         }
 
         [HttpPost]
@@ -64,11 +54,6 @@ namespace CarRentalManagerAPI.Controllers
         public ActionResult<Car> Get([FromRoute] int id)
         {
             var car = _carService.GetById(id);
-
-            if(car is null)
-            {
-                return NotFound();
-            }
 
             return Ok(car);
         }

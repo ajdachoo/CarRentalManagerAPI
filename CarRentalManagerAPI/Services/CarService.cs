@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Exceptions;
 using CarRentalManagerAPI.Models.Car;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace CarRentalManagerAPI.Services
         CarDto GetById(int id);
         IEnumerable<CarDto> GetAll();
         int Create(CreateCarDto createCarDto);
-        bool Delete(int id);
-        bool Update(int id, UpdateCarDto updateCarDto);
+        void Delete(int id);
+        void Update(int id, UpdateCarDto updateCarDto);
     }
     public class CarService : ICarService
     {
@@ -25,11 +26,11 @@ namespace CarRentalManagerAPI.Services
             _mapper = mapper;
         }
 
-        public bool Update(int id, UpdateCarDto updateCarDto)
+        public void Update(int id, UpdateCarDto updateCarDto)
         {
             var car = _dbContext.Cars.FirstOrDefault(c => c.Id == id);
 
-            if(car is null) return false;
+            if (car is null) throw new NotFoundException("Car not found");
 
             var updateCar = _mapper.Map<Car>(updateCarDto); 
 
@@ -46,27 +47,23 @@ namespace CarRentalManagerAPI.Services
             car.NumberOfSeats = updateCar.NumberOfSeats;
 
             _dbContext.SaveChanges();
-
-            return true;
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             var car = _dbContext.Cars.FirstOrDefault(c => c.Id == id);
 
-            if(car is null) return false;
+            if(car is null) throw new NotFoundException("Car not found");
 
             _dbContext.Cars.Remove(car);
             _dbContext.SaveChanges();
-
-            return true;
         }
 
         public CarDto GetById(int id)
         {
             var car = _dbContext.Cars.FirstOrDefault(c => c.Id == id);
 
-            if (car is null) return null;
+            if (car is null) throw new NotFoundException("Car not found");
 
             var carDto = _mapper.Map<CarDto>(car);
 
