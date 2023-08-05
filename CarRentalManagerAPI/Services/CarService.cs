@@ -32,16 +32,28 @@ namespace CarRentalManagerAPI.Services
 
             if (car is null) throw new NotFoundException("Car not found");
 
-            var updateCar = _mapper.Map<Car>(updateCarDto); 
+            var updateCar = _mapper.Map<Car>(updateCarDto);
 
+            var vinInUse = _dbContext.Cars.Any(c => c.VIN == updateCar.VIN);
+            if (vinInUse)
+            {
+                if (car.VIN != updateCar.VIN) throw new ValueIsTakenException("That VIN is taken");
+            }
+
+            var registrationNumberInUse = _dbContext.Cars.Any(c => c.RegistrationNumber == updateCar.RegistrationNumber);
+            if (registrationNumberInUse)
+            {
+                if (car.RegistrationNumber != updateCar.RegistrationNumber) throw new ValueIsTakenException("That registration number is taken");
+            }
+
+            car.VIN = updateCar.VIN;
+            car.RegistrationNumber = updateCar.RegistrationNumber;
             car.PricePerDay = updateCar.PricePerDay;
             car.DrivingLicenseCategory = updateCar.DrivingLicenseCategory;
             car.EnginePower = updateCar.EnginePower;
             car.Transmission = updateCar.Transmission;
             car.Status = updateCar.Status;
             car.Mark = updateCar.Mark;
-            car.VIN = updateCar.VIN;
-            car.RegistrationNumber = updateCar.RegistrationNumber;
             car.Comments = updateCar.Comments;
             car.Model = updateCar.Model;
             car.NumberOfSeats = updateCar.NumberOfSeats;

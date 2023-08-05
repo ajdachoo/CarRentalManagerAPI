@@ -18,6 +18,11 @@ namespace CarRentalManagerAPI.Middleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(notFoundException.Message);
             }
+            catch(ValueIsTakenException valueIsTakenException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(valueIsTakenException.Message);
+            }
             catch(Exception e)
             {
                 context.Response.StatusCode = 500;
