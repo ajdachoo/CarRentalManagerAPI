@@ -16,10 +16,10 @@ namespace CarRentalManagerAPI.Migrations
                     Mark = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Transmission = table.Column<int>(type: "int", nullable: false),
-                    EnginePower = table.Column<int>(type: "int", maxLength: 4, nullable: false),
+                    EnginePower = table.Column<int>(type: "int", nullable: false),
                     DrivingLicenseCategory = table.Column<int>(type: "int", nullable: false),
-                    NumberOfSeats = table.Column<int>(type: "int", maxLength: 2, nullable: false),
-                    PricePerDay = table.Column<int>(type: "int", maxLength: 6, nullable: false),
+                    NumberOfSeats = table.Column<int>(type: "int", nullable: false),
+                    PricePerDay = table.Column<double>(type: "float", nullable: false),
                     RegistrationNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     VIN = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -39,10 +39,10 @@ namespace CarRentalManagerAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     PESELOrPassportNumber = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", maxLength: 9, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    DrivingLicenseCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    DrivingLicenseCategories = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -58,7 +58,7 @@ namespace CarRentalManagerAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", maxLength: 9, nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +77,7 @@ namespace CarRentalManagerAPI.Migrations
                     RentalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpectedDateOfReturn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<double>(type: "float", maxLength: 25, nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
                     DateOfReturn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Comments = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },

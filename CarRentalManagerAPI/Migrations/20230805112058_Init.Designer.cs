@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalManagerAPI.Migrations
 {
     [DbContext(typeof(CarRentalManagerDbContext))]
-    [Migration("20230802163423_Refactor")]
-    partial class Refactor
+    [Migration("20230805112058_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,6 @@ namespace CarRentalManagerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("EnginePower")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<string>("Mark")
@@ -50,12 +49,10 @@ namespace CarRentalManagerAPI.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<int>("NumberOfSeats")
-                        .HasMaxLength(2)
                         .HasColumnType("int");
 
-                    b.Property<int>("PricePerDay")
-                        .HasMaxLength(6)
-                        .HasColumnType("int");
+                    b.Property<double>("PricePerDay")
+                        .HasColumnType("float");
 
                     b.Property<string>("RegistrationNumber")
                         .IsRequired()
@@ -89,6 +86,10 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DrivingLicenseCategories")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -107,18 +108,15 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(9)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("drivingLicenseCategories")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -133,7 +131,6 @@ namespace CarRentalManagerAPI.Migrations
                         .UseIdentityColumn();
 
                     b.Property<double>("Amount")
-                        .HasMaxLength(25)
                         .HasColumnType("float");
 
                     b.Property<int>("CarId")
@@ -184,9 +181,10 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(9)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Surname")
                         .IsRequired()

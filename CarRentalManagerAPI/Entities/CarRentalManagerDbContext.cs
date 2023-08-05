@@ -33,7 +33,7 @@ namespace CarRentalManagerAPI.Entities
             modelBuilder.Entity<Client>(eb =>
             {
                 eb.Property(c => c.IsBlocked).IsRequired();
-                eb.Property(c => c.drivingLicenseCategories).IsRequired();
+                eb.Property(c => c.DrivingLicenseCategories).IsRequired();
                 eb.Property(c => c.Comments).HasMaxLength(50);
                 eb.Property(c => c.Surname).HasMaxLength(25).IsRequired();
                 eb.Property(c => c.Email).HasMaxLength(25).IsRequired();

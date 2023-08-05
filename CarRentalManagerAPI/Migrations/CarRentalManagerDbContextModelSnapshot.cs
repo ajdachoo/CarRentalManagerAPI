@@ -34,7 +34,6 @@ namespace CarRentalManagerAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("EnginePower")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<string>("Mark")
@@ -48,11 +47,9 @@ namespace CarRentalManagerAPI.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<int>("NumberOfSeats")
-                        .HasMaxLength(2)
                         .HasColumnType("int");
 
                     b.Property<double>("PricePerDay")
-                        .HasMaxLength(6)
                         .HasColumnType("float");
 
                     b.Property<string>("RegistrationNumber")
@@ -87,6 +84,10 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DrivingLicenseCategories")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -115,10 +116,6 @@ namespace CarRentalManagerAPI.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<string>("drivingLicenseCategories")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
@@ -132,7 +129,6 @@ namespace CarRentalManagerAPI.Migrations
                         .UseIdentityColumn();
 
                     b.Property<double>("Amount")
-                        .HasMaxLength(25)
                         .HasColumnType("float");
 
                     b.Property<int>("CarId")

@@ -46,20 +46,20 @@ namespace CarRentalManagerAPI
         {
             var clients = new List<Client>()
             {
-                new Client()
-                {
-                    Name = "Jan",
-                    Surname = "Kowalski",
-                    DrivingLicenseCategories = new List<DrivingLicenseCategoryEnum>
-                    {
-                        DrivingLicenseCategoryEnum.B,
-                        DrivingLicenseCategoryEnum.C
-                    },
-                    Email = "jankowalski@gmail.com",
-                    PESELOrPassportNumber = "11111111111",
-                    PhoneNumber = "000000000",
-                    IsBlocked = false,
-                }
+                //new Client()
+                //{
+                //    Name = "Jan",
+                //    Surname = "Kowalski",
+                //    DrivingLicenseCategories = new List<DrivingLicenseCategoryEnum>
+                //    {
+                //        DrivingLicenseCategoryEnum.B,
+                //        DrivingLicenseCategoryEnum.C
+                //    },
+                //    Email = "jankowalski@gmail.com",
+                //    PESELOrPassportNumber = "11111111111",
+                //    PhoneNumber = "000000000",
+                //    IsBlocked = false,
+                //}
             };
 
             return clients;
