@@ -1,11 +1,7 @@
-﻿using CarRentalManagerAPI.Entities;
-using System.Collections.Generic;
-
-namespace CarRentalManagerAPI.Models.Client
+﻿namespace CarRentalManagerAPI.Models.Client
 {
-    public class ClientDto
+    public class UpdateClientDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PESELOrPassportNumber { get; set; }
