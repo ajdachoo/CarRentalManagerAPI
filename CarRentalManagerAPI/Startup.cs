@@ -2,6 +2,7 @@ using CarRentalManagerAPI.Entities;
 using CarRentalManagerAPI.Middleware;
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
+using CarRentalManagerAPI.Models.User;
 using CarRentalManagerAPI.Models.Validators;
 using CarRentalManagerAPI.Services;
 using FluentValidation;
@@ -39,11 +40,14 @@ namespace CarRentalManagerAPI
             services.AddAutoMapper(this.GetType().Assembly);
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IValidator<CreateCarDto>, CreateCarDtoValidator>();
             services.AddScoped<IValidator<UpdateCarDto>, UpdateCarDtoValidator>();
             services.AddScoped<IValidator<CreateClientDto>, CreateClientDtoValidator>();
             services.AddScoped<IValidator<UpdateClientDto>, UpdateClientDtoValidator>();
+            services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
+            services.AddScoped<IValidator<UpdateUserDto>, UpdateUserDtoValidator>();
             services.AddSwaggerGen();
         }
 

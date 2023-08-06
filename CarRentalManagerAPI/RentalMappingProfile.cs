@@ -3,6 +3,7 @@ using CarRentalManagerAPI.Entities;
 using CarRentalManagerAPI.Enums;
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
+using CarRentalManagerAPI.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,16 @@ namespace CarRentalManagerAPI
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => FirstLetterToUpper(src.Surname)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => FirstLetterToUpper(src.Name)))
                 .ForMember(dest => dest.PESELOrPassportNumber, opt => opt.MapFrom(src => src.PESELOrPassportNumber.ToUpper()));
+
+            CreateMap<User, UserDto>();
+
+            CreateMap<CreateUserDto, User>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => FirstLetterToUpper(src.Name)))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => FirstLetterToUpper(src.Surname)));
+
+            CreateMap<UpdateUserDto, User>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => FirstLetterToUpper(src.Name)))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => FirstLetterToUpper(src.Surname)));
         }
 
         private List<string> StringToDrivingLicenseCategoriesEnumList(string str)
