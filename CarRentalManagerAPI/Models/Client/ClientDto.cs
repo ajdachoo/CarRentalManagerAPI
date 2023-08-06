@@ -1,4 +1,5 @@
 ﻿using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Enums;
 using System.Collections.Generic;
 
 namespace CarRentalManagerAPI.Models.Client
@@ -12,7 +13,7 @@ namespace CarRentalManagerAPI.Models.Client
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public bool IsBlocked { get; set; }
-        public string DrivingLicenseCategories { get; set; }
+        public List<string> DrivingLicenseCategories { get; set; }
         public string Comments { get; set; }
     }
 }

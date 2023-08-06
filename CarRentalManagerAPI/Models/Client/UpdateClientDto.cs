@@ -8,7 +8,7 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public bool IsBlocked { get; set; }
-        public string DrivingLicenseCategories { get; set; }
+        public string[] DrivingLicenseCategories { get; set; }
         public string Comments { get; set; }
     }
 }

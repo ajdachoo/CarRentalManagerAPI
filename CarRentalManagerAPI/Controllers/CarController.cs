@@ -52,7 +52,7 @@ namespace CarRentalManagerAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Car> Get([FromRoute] int id)
+        public ActionResult<CarDto> Get([FromRoute] int id)
         {
             var car = _carService.GetById(id);
 
