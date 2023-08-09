@@ -23,7 +23,12 @@ namespace CarRentalManagerAPI.Middleware
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(valueIsTakenException.Message);
             }
-            catch(Exception e)
+            catch (BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (Exception e)
             {
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync($"Something went wrong: {e.ToString()}");

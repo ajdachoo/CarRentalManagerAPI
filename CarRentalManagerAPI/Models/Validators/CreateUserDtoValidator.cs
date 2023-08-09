@@ -10,7 +10,7 @@ namespace CarRentalManagerAPI.Models.Validators
         public CreateUserDtoValidator(CarRentalManagerDbContext dbContext)
         {
             RuleFor(p => p.PhoneNumber)
-                .NotNull()
+                .NotEmpty()
                 .MaximumLength(9)
                 .Custom((value, context) =>
                 {
@@ -23,11 +23,11 @@ namespace CarRentalManagerAPI.Models.Validators
                 });
 
             RuleFor(p => p.Surname)
-                .NotNull()
+                .NotEmpty()
                 .MaximumLength(25);
 
             RuleFor(p => p.Name)
-                .NotNull()
+                .NotEmpty()
                 .MaximumLength(25);
         }
     }

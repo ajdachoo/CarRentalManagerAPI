@@ -13,7 +13,7 @@ namespace CarRentalManagerAPI.Models.Validators
         public UpdateClientDtoValidator(CarRentalManagerDbContext dbContext)
         {
             RuleFor(p => p.IsBlocked)
-                .NotEmpty();
+                .NotNull();
 
             RuleFor(p => p.DrivingLicenseCategories)
                 .NotEmpty()

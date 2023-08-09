@@ -3,9 +3,11 @@ using CarRentalManagerAPI.Entities;
 using CarRentalManagerAPI.Enums;
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
+using CarRentalManagerAPI.Models.Rental;
 using CarRentalManagerAPI.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -59,6 +61,16 @@ namespace CarRentalManagerAPI
             CreateMap<UpdateUserDto, User>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => FirstLetterToUpper(src.Name)))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => FirstLetterToUpper(src.Surname)));
+
+            CreateMap<Rental, RentalDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => src.RentalDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
+                .ForMember(dest => dest.DateOfReturn, opt => opt.MapFrom(src => src.DateOfReturn.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
+                .ForMember(dest => dest.ExpectedDateOfReturn, opt => opt.MapFrom(src => src.ExpectedDateOfReturn.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")));
+
+            CreateMap<CreateRentalDto, Rental>()
+                .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.RentalDate, "yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture, DateTimeStyles.None)))
+                .ForMember(dest => dest.ExpectedDateOfReturn, opt => opt.MapFrom(src => DateTime.ParseExact(src.ExpectedDateOfReturn, "yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture, DateTimeStyles.None)));
         }
 
         private List<string> StringToDrivingLicenseCategoriesEnumList(string str)

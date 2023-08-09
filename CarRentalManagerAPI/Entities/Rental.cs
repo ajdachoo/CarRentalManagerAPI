@@ -20,6 +20,5 @@ namespace CarRentalManagerAPI.Entities
 #nullable enable
         public DateTime? DateOfReturn { get; set; }
         public string? Comments { get; set; }
-
     }
 }
