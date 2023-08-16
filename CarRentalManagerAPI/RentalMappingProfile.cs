@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CarRentalManagerAPI
@@ -28,14 +27,19 @@ namespace CarRentalManagerAPI
                 .ForMember(dest => dest.DrivingLicenseCategory, opt => opt.MapFrom(src => Enum.Parse<DrivingLicenseCategoryEnum>(src.DrivingLicenseCategory, true)))
                 .ForMember(dest => dest.Transmission, opt => opt.MapFrom(src => Enum.Parse<TransmissionEnum>(src.Transmission, true)))
                 .ForMember(dest => dest.VIN, opt => opt.MapFrom(src => src.VIN.ToUpper()))
-                .ForMember(dest => dest.RegistrationNumber, opt => opt.MapFrom(src => src.RegistrationNumber.ToUpper()));
+                .ForMember(dest => dest.RegistrationNumber, opt => opt.MapFrom(src => src.RegistrationNumber.ToUpper()))
+                .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => FirstLetterToUpper(src.Mark)))
+                .ForMember(dest => dest.Model, opt => opt.MapFrom(src => FirstLetterToUpper(src.Model)));
 
             CreateMap<UpdateCarDto, Car>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<CarStatusEnum>(src.Status, true)))
                 .ForMember(dest => dest.DrivingLicenseCategory, opt => opt.MapFrom(src => Enum.Parse<DrivingLicenseCategoryEnum>(src.DrivingLicenseCategory, true)))
                 .ForMember(dest => dest.Transmission, opt => opt.MapFrom(src => Enum.Parse<TransmissionEnum>(src.Transmission, true)))
                 .ForMember(dest => dest.VIN, opt => opt.MapFrom(src => src.VIN.ToUpper()))
-                .ForMember(dest => dest.RegistrationNumber, opt => opt.MapFrom(src => src.RegistrationNumber.ToUpper()));
+                .ForMember(dest => dest.RegistrationNumber, opt => opt.MapFrom(src => src.RegistrationNumber.ToUpper()))
+                .ForMember(dest => dest.Mark, opt => opt.MapFrom(src => FirstLetterToUpper(src.Mark)))
+                .ForMember(dest => dest.Model, opt => opt.MapFrom(src => FirstLetterToUpper(src.Model)));
+
 
             CreateMap<Client, ClientDto>()
                 .ForMember(dest => dest.DrivingLicenseCategories, opt => opt.MapFrom(src => StringToDrivingLicenseCategoriesEnumList(src.DrivingLicenseCategories)));
@@ -64,9 +68,9 @@ namespace CarRentalManagerAPI
 
             CreateMap<Rental, RentalDto>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-                .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => src.RentalDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
-                .ForMember(dest => dest.DateOfReturn, opt => opt.MapFrom(src => src.DateOfReturn.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
-                .ForMember(dest => dest.ExpectedDateOfReturn, opt => opt.MapFrom(src => src.ExpectedDateOfReturn.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")));
+                .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => src.RentalDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
+                .ForMember(dest => dest.DateOfReturn, opt => opt.MapFrom(src => src.DateOfReturn.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")))
+                .ForMember(dest => dest.ExpectedDateOfReturn, opt => opt.MapFrom(src => src.ExpectedDateOfReturn.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")));
 
             CreateMap<CreateRentalDto, Rental>()
                 .ForMember(dest => dest.RentalDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.RentalDate, "yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture, DateTimeStyles.None)))

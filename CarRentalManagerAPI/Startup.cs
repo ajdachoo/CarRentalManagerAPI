@@ -51,12 +51,25 @@ namespace CarRentalManagerAPI
             services.AddScoped<IValidator<CreateUserDto>, CreateUserDtoValidator>();
             services.AddScoped<IValidator<UpdateUserDto>, UpdateUserDtoValidator>();
             services.AddScoped<IValidator<CreateRentalDto>, CreateRentalDtoValidator>();
+            services.AddScoped<IValidator<FinishRentalDto>, FinishRentalDtoValidator>();
             services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("FrontEndClient", builder =>
+
+                builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:3000")
+
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RentalSeeder seeder)
         {
+            app.UseCors("FrontEndClient");
+            
             seeder.Seed();
 
             if (env.IsDevelopment())

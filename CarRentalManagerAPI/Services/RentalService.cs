@@ -7,6 +7,7 @@ using CarRentalManagerAPI.Models.Rental;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace CarRentalManagerAPI.Services
@@ -15,7 +16,7 @@ namespace CarRentalManagerAPI.Services
     {
         public int Create(CreateRentalDto createRentalDto);
         public void Delete(int id);
-        public double Finish(int id, DateTime dateOfReturn);
+        public double Finish(int id, FinishRentalDto finishRentalDto);
         public IEnumerable<RentalDto> GetAll();
         public RentalDto GetById(int id);
     }
@@ -61,14 +62,17 @@ namespace CarRentalManagerAPI.Services
             _dbContext.SaveChanges();
         }
 
-        public double Finish(int id, DateTime dateOfReturn)
+        public double Finish(int id, FinishRentalDto finishRentalDto)
         {
+            var dateOfReturn = DateTime.ParseExact(finishRentalDto.DateOfReturn, "yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
             var rental = _dbContext.Rentals
                 .Include(r => r.Car)
                 .FirstOrDefault(r => r.Id == id);
 
             if (rental is null) throw new NotFoundException("Rental not found");
             if (rental.Status == RentalStatusEnum.Finished) throw new BadRequestException("Rental has already been finished");
+            if (dateOfReturn < rental.RentalDate) throw new BadRequestException("Date of return must be later than rental date");
 
             rental.DateOfReturn = dateOfReturn;
             rental.Amount = CalculateAmount(rental);
@@ -99,7 +103,11 @@ namespace CarRentalManagerAPI.Services
         {
             UpdateRentalsStatus();
 
-            var rental = _dbContext.Rentals.FirstOrDefault(c => c.Id == id);
+            var rental = _dbContext.Rentals
+                .Include(r => r.Car)
+                .Include(r => r.User)
+                .Include(r => r.Client)
+                .FirstOrDefault(c => c.Id == id);
 
             if (rental is null) throw new NotFoundException("Rental not found");
 
@@ -113,7 +121,7 @@ namespace CarRentalManagerAPI.Services
             double amount;
             double totalDays;
 
-            if (rental.DateOfReturn is null)
+            if (rental.DateOfReturn is null || rental.DateOfReturn <= rental.ExpectedDateOfReturn)
             {
                 totalDays = (rental.ExpectedDateOfReturn - rental.RentalDate).TotalDays;
             }
@@ -131,7 +139,7 @@ namespace CarRentalManagerAPI.Services
         {
             DateTime nowDateTime = DateTime.Now;
             var rentals = _dbContext.Rentals
-                .Where(r => r.ExpectedDateOfReturn < nowDateTime)
+                .Where(r => r.ExpectedDateOfReturn < nowDateTime && r.DateOfReturn == null)
                 .ToList();
 
             foreach(Rental rental in rentals)

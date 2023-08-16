@@ -50,11 +50,10 @@ namespace CarRentalManagerAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}/finish")]
-        public ActionResult<double> Finish([FromRoute] int id)
+        [HttpPost("{id}/finish")]
+        public ActionResult<double> Finish([FromRoute] int id, [FromBody] FinishRentalDto finishRentalDto)
         {
-            var dateOfReturn = DateTime.Now;
-            double amount = _rentalService.Finish(id, dateOfReturn);
+            double amount = _rentalService.Finish(id, finishRentalDto);
 
             return Ok(amount);
         }
