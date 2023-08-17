@@ -19,9 +19,9 @@ namespace CarRentalManagerAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<RentalDto>> GetAll()
+        public ActionResult<IEnumerable<RentalDto>> GetAll([FromQuery]string status)
         {
-            var rentals = _rentalService.GetAll();
+            var rentals = _rentalService.GetAll(status);
 
             return Ok(rentals);
         }

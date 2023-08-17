@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Enums;
 using CarRentalManagerAPI.Exceptions;
 using CarRentalManagerAPI.Models.Car;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +12,7 @@ namespace CarRentalManagerAPI.Services
     public interface ICarService
     {
         CarDto GetById(int id);
-        IEnumerable<CarDto> GetAll();
+        IEnumerable<CarDto> GetAll(string status);
         int Create(CreateCarDto createCarDto);
         void Delete(int id);
         void Update(int id, UpdateCarDto updateCarDto);
@@ -82,9 +84,17 @@ namespace CarRentalManagerAPI.Services
             return carDto;
         }
 
-        public IEnumerable<CarDto> GetAll()
+        public IEnumerable<CarDto> GetAll(string status)
         {
-            var cars = _dbContext.Cars.ToList();
+            CarStatusEnum statusEnum = CarStatusEnum.Avaliable;
+
+            if (status != null && !Enum.TryParse(status, true, out statusEnum))
+                throw new BadRequestException("Invalid car status");
+
+            var cars = _dbContext
+                .Cars
+                .Where(c => status == null || c.Status == statusEnum)
+                .ToList();
 
             var carsDtos = _mapper.Map<List<CarDto>>(cars);
 

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using CarRentalManagerAPI.Entities;
+using CarRentalManagerAPI.Enums;
 using CarRentalManagerAPI.Exceptions;
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace CarRentalManagerAPI.Services
 {
     public interface IClientService
     {
-        public IEnumerable<ClientDto> GetAll();
+        public IEnumerable<ClientDto> GetAll(bool? isBlocked);
         public int Create(CreateClientDto createClientDto);
         public ClientDto GetById(int id);
         public void Delete(int id);
@@ -29,9 +31,12 @@ namespace CarRentalManagerAPI.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ClientDto> GetAll()
+        public IEnumerable<ClientDto> GetAll(bool? isBlocked)
         {
-            var clients = _dbContext.Clients.ToList();
+            var clients = _dbContext
+                .Clients
+                .Where(c=> isBlocked == null || c.IsBlocked == isBlocked)
+                .ToList();
 
             var clientsDtos = _mapper.Map<List<ClientDto>>(clients);
 

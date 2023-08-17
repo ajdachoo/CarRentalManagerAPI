@@ -44,9 +44,9 @@ namespace CarRentalManagerAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CarDto>> GetAll()
+        public ActionResult<IEnumerable<CarDto>> GetAll(string status)
         {
-            var cars = _carService.GetAll();
+            var cars = _carService.GetAll(status);
 
             return Ok(cars);
         }

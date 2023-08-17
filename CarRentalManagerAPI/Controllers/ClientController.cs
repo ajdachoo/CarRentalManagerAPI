@@ -20,9 +20,9 @@ namespace CarRentalManagerAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ClientDto>> GetAll()
+        public ActionResult<IEnumerable<ClientDto>> GetAll([FromQuery] bool? isBlocked)
         {
-            var clients = _clientService.GetAll();
+            var clients = _clientService.GetAll(isBlocked);
 
             return Ok(clients);
         }

@@ -17,7 +17,7 @@ namespace CarRentalManagerAPI.Services
         public int Create(CreateRentalDto createRentalDto);
         public void Delete(int id);
         public double Finish(int id, FinishRentalDto finishRentalDto);
-        public IEnumerable<RentalDto> GetAll();
+        public IEnumerable<RentalDto> GetAll(string status);
         public RentalDto GetById(int id);
     }
     public class RentalService : IRentalService
@@ -34,7 +34,7 @@ namespace CarRentalManagerAPI.Services
         {
             var rental = _mapper.Map<Rental>(createRentalDto);
 
-            if(rental.RentalDate > rental.ExpectedDateOfReturn)
+            if (rental.RentalDate > rental.ExpectedDateOfReturn)
             {
                 throw new BadRequestException("Expected date of return must be later than rental date");
             }
@@ -57,7 +57,7 @@ namespace CarRentalManagerAPI.Services
             if (rental is null) throw new NotFoundException("Rental not found");
 
             rental.Car.Status = CarStatusEnum.Avaliable;
-            
+
             _dbContext.Rentals.Remove(rental);
             _dbContext.SaveChanges();
         }
@@ -84,14 +84,20 @@ namespace CarRentalManagerAPI.Services
             return rental.Amount;
         }
 
-        public IEnumerable<RentalDto> GetAll()
+        public IEnumerable<RentalDto> GetAll(string status)
         {
+            RentalStatusEnum statusEnum = RentalStatusEnum.Active;
+
+            if (status != null && !Enum.TryParse(status, true, out statusEnum))
+                throw new BadRequestException("Invalid rental status");
+
             UpdateRentalsStatus();
 
             var rentals = _dbContext.Rentals
                 .Include(r=>r.Car)
                 .Include(r=>r.User)
                 .Include(r=>r.Client)
+                .Where(r => status == null || r.Status == statusEnum)
                 .ToList();
 
             var rentalsDtos = _mapper.Map<List<RentalDto>>(rentals);
@@ -130,7 +136,7 @@ namespace CarRentalManagerAPI.Services
                 totalDays = (rental.DateOfReturn.Value - rental.RentalDate).TotalDays;
             }
 
-            amount = totalDays * rental.Car.PricePerDay;
+            amount = Math.Round(totalDays * rental.Car.PricePerDay, 2);
 
             return amount;
         }
