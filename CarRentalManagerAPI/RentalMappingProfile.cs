@@ -5,6 +5,7 @@ using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
 using CarRentalManagerAPI.Models.Rental;
 using CarRentalManagerAPI.Models.User;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -1,9 +1,7 @@
 ﻿namespace CarRentalManagerAPI.Models.User
 {
-    public class CreateUserDto
+    public class LoginUserDto
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
     }

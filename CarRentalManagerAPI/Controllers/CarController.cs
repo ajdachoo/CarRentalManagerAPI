@@ -2,14 +2,17 @@
 using CarRentalManagerAPI.Entities;
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace CarRentalManagerAPI.Controllers
 {
     [Route("api/cars")]
     [ApiController]
+    [Authorize]
     public class CarController : ControllerBase
     {
         private readonly ICarService _carService;

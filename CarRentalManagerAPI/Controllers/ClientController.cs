@@ -2,6 +2,7 @@
 using CarRentalManagerAPI.Models.Car;
 using CarRentalManagerAPI.Models.Client;
 using CarRentalManagerAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace CarRentalManagerAPI.Controllers
 {
     [Route("api/clients")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;

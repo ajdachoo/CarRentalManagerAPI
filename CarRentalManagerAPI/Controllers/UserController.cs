@@ -1,5 +1,6 @@
 ﻿using CarRentalManagerAPI.Models.User;
 using CarRentalManagerAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace CarRentalManagerAPI.Controllers
 {
     [Route("api/users")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -32,12 +34,20 @@ namespace CarRentalManagerAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public ActionResult Create([FromBody] CreateUserDto createUserDto)
+        [HttpPost("register")]
+        public ActionResult Register([FromBody] CreateUserDto createUserDto)
         {
-            var userId = _userService.Create(createUserDto);
+            var userId = _userService.RegisterUser(createUserDto);
 
             return Created($"api/users/{userId}", null);
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public ActionResult Login([FromBody] LoginUserDto loginUserDto)
+        {
+            string token = _userService.GenerateJwt(loginUserDto);
+            return Ok(token);
         }
 
         [HttpDelete("{id}")]

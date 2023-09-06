@@ -29,6 +29,11 @@ namespace CarRentalManagerAPI.Models.Validators
             RuleFor(p => p.Name)
                 .NotEmpty()
                 .MaximumLength(25);
+
+            RuleFor(p => p.Password)
+                .NotEmpty()
+                .MinimumLength(8)
+                .MaximumLength(25);
         }
     }
 }

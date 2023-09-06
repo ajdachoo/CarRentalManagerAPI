@@ -19,26 +19,33 @@ namespace CarRentalManagerAPI
         {
             if (_dbContext.Database.CanConnect())
             {
-                if (!_dbContext.Clients.Any())
+                var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+                if(pendingMigrations != null && pendingMigrations.Any())
                 {
-                    var clients = GetClients();
-                    _dbContext.Clients.AddRange(clients);
-                    _dbContext.SaveChanges();
+                    _dbContext.Database.Migrate();
                 }
+                
+                
+                //if (!_dbContext.Clients.Any())
+                //{
+                //    var clients = GetClients();
+                //    _dbContext.Clients.AddRange(clients);
+                //    _dbContext.SaveChanges();
+                //}
 
-                if (!_dbContext.Cars.Any())
-                {
-                    var cars = GetCars();
-                    _dbContext.Cars.AddRange(cars);
-                    _dbContext.SaveChanges();
-                }
+                //if (!_dbContext.Cars.Any())
+                //{
+                //    var cars = GetCars();
+                //    _dbContext.Cars.AddRange(cars);
+                //    _dbContext.SaveChanges();
+                //}
 
-                if (!_dbContext.Users.Any())
-                {
-                    var users = GetUsers();
-                    _dbContext.Users.AddRange(users);
-                    _dbContext.SaveChanges();
-                }
+                //if (!_dbContext.Users.Any())
+                //{
+                //    var users = GetUsers();
+                //    _dbContext.Users.AddRange(users);
+                //    _dbContext.SaveChanges();
+                //}
             }
         }
 

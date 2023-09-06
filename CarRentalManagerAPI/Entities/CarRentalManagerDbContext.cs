@@ -11,7 +11,10 @@ namespace CarRentalManagerAPI.Entities
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<User> Users { get; set; }
 
-        private string _connectionString = "Server=(localdb)\\mssqllocaldb;Database=CarRentalManagerDb;Trusted_Connection=True;";
+        public CarRentalManagerDbContext(DbContextOptions<CarRentalManagerDbContext> options) : base(options)
+        {
+            
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,12 +59,8 @@ namespace CarRentalManagerAPI.Entities
                 eb.Property(u => u.Surname).HasMaxLength(25).IsRequired();
                 eb.Property(u => u.Name).HasMaxLength(25).IsRequired();
                 eb.Property(u => u.PhoneNumber).HasMaxLength(9).IsRequired();
+                eb.Property(u => u.PasswordHash).IsRequired();
             });
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
         }
     }
 }
